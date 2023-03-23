@@ -1,0 +1,34 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* color: #ebe5e5; */
+}
+
+body{
+  background-color: #000;
+  /* color: #1b1b1c; */
+  position: inherit;
+}
+
+
+/* .animated-text::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  border-left: 2px solid #b89f48;
+  animation: animate 4s steps(12) infinite;
+}
+
+@keyframes animate{
+  40%, 60%{
+    left: 100%;
+  }
+  100%{
+    left: 0%;
+  }
+} */
