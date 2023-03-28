@@ -5,7 +5,7 @@ const ProductImages = ({ img }) => {
 
   // console.log(img[0], 'zero');
 
-  const [mainImage, setMainImage] = useState(() => img[0].url);
+  const [mainImage, setMainImage] = useState(img[0].url);
   // console.log(mainImage, 'main');
 
   const handleClick = (elem) => {

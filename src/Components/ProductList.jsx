@@ -12,7 +12,7 @@ const ProductList = () => {
 
   return (
     <Wrapper>
-      <div className='mainContainer flexProperty' style={filterProducts.length === 0 ? {width: '100%', flexDirection: 'column', gap: '0.5rem'} : {maxWidth: '70rem', flexDirection: 'column', gap: '0.5rem'}} >
+      <div className='mainContainer flexProperty'>
         <div className="viewAndSort flexProperty">
           <View />
           <Sort />
@@ -31,6 +31,9 @@ const ProductList = () => {
 
 const Wrapper = styled.section`
   .mainContainer{
+    max-width: 70rem;
+    flex-direction: column;
+    gap: '0.5rem';
 
     .viewAndSort{
       padding: 1rem 2rem;

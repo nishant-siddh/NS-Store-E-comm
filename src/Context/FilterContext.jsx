@@ -38,7 +38,7 @@ const FilterContextProvider = ({ children }) => {
 
     const updateFiltersValue = (e) => {
         const name = e.target.id;
-        const value = name === 'categoryFilterValue' ? e.target.textContent : e.target.value;
+        const value = (name === 'categoryFilterValue' ? e.target.textContent : e.target.value);
         dispatch({type: 'Set_Updated_Filters_Value', payload: {name, value}})
     }
 

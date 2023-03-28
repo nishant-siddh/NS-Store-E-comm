@@ -39,11 +39,6 @@ const FilterByCategorySection = styled.section`
         align-items: flex-start;
         gap: 0.7rem;
     }
-    
-    h3{
-        margin-bottom: 0.2rem;
-        font-weight: 600;
-    }
 
     .item{
         padding-left: 6px;

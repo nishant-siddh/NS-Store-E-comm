@@ -28,21 +28,26 @@ const ProductsReducer = (state, action) => {
         case "SET_SINGLE_PRODUCT_LOADING":
             return {
                 ...state,
-                isLoading: true,
+                isSingleLoading: true,
             }
 
         case "SET_SINGLE_PRODUCT":
             return {
                 ...state,
-                isLoading: false,
-                singleProducts: action.payload
-            }
+                singleProducts: action.payload,
+                isSingleLoading: false,
+            } 
+        
+        case "SET_SINGLE_ERROR":
+            return {
+                ...state,
+                isSingleLoading: false,
+                isError: true,
+            };
 
         default:
             return state
     }
-
 }
-
 
 export default ProductsReducer;

@@ -14,7 +14,6 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 ::selection {
-  /* color: white; */
   background: ${({theme}) => theme.colors.baseColor};
 }
 
@@ -26,6 +25,11 @@ h1{
 h2, h3, h4, p, div{
     font-weight: normal;
     color: #ebe5e5;
+}
+
+h3{
+    margin-bottom: 0.2rem;
+    font-weight: 600;
 }
 
 a{

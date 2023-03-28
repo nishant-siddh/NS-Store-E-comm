@@ -42,7 +42,7 @@ const Product = (element) => {
 const ProductItem = styled.section`
     .productItem{
         /* outline: 2px solid red; */
-      background-color: ${({theme}) => theme.colors.lightGreyBackground};
+      background-color: ${({theme}) => theme.colors.greyBackground};
       padding: 0.5rem;
 
         .container{

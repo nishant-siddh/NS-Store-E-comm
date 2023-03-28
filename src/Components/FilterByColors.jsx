@@ -60,11 +60,6 @@ const Wrapper = styled.section`
         gap: 0.5rem;
     }
 
-    h3{
-        margin-bottom: 0.2rem;
-        font-weight: 600;
-    }
-
     .allColorToggleBtn{
         background-color: transparent;
         color: white;

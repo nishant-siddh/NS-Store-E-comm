@@ -16,11 +16,10 @@ const App = () => {
   const theme = {
     colors: {
       baseColor: "#b89f48",
-      onHoverBtnBgColor: '#c1a74c',
+      onHoverBtnBgColor: '#e4c657',
       blackColor: '#070707',
       greyBackground: '#1b1b1b',
       lightGreyBackground: '#191818',
-      // lightGreyBackground: '#161616',
       lightWhite: '#ebe5e5',
     },
     media: {

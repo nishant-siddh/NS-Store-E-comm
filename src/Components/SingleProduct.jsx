@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductContext } from '../Context/ProductContext';
 import FormatPrice from './FormatPrice';
@@ -7,25 +7,15 @@ import ProductImages from './ProductImages';
 import PageNavigation from './PageNavigation';
 import { TbReplace, TbTruckDelivery } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
-import { Button } from '../Styles/Button';
-import { useState } from 'react';
 import Stars from './Stars';
+import { useProductsCartContext } from '../Context/ProductsCartContext';
+import AddToCart from './AddToCart';
 
 const API = "https://api.pujakaitem.com/api/products";
 
 const SingleProduct = () => {
   const { isLoading, getSingleProduct, singleProducts } = useProductContext();
-  // const [isFullTextDisplayed, setIsFullTextDisplayed] = useState(false);
   const { id } = useParams();
-  const [count, SetCount] = useState(1);
-
-  const handleDecrement = () => {
-    SetCount(prev => prev - 1);
-  }
-
-  const handleIncrement = () => {
-    SetCount(prev => prev + 1);
-  }
 
   const {
     // id: alias,
@@ -34,13 +24,12 @@ const SingleProduct = () => {
     price,
     description,
     // category,
+    colors,
     stock,
     stars,
     image,
     reviews
   } = singleProducts || {};
-
-  // console.log(singleProducts, 'sp');
 
   // eslint-disable-next-line
   useEffect(() => {
@@ -117,26 +106,17 @@ const SingleProduct = () => {
             </div>
 
             <div className='available'>
-              <p>Available: <span>{stock > 0 ? 'In stock' : 'Out of stock'}</span></p>
+              <p>Availability: <span style={stock > 0 ? {color: 'green'} : {color: 'red'}}>{stock > 0 ? 'In stock' : 'Out of stock'}</span></p>
             </div>
 
             <p className='brand'>
               Brand: <span>{company}</span>
             </p>
 
-            <div className='noOfItemsToCart flexProperty'>
-              <div className="btns flexProperty">
-                <button className="decreaseNoOfItems" disabled={count > 1 ? false : true} onClick={handleDecrement}>-</button>
-                <p>{count}</p>
-                <button className="increaseNoOfItems" onClick={handleIncrement}>+</button>
-              </div>
-            </div>
+            {/* <hr /> */}
 
-            <NavLink to='/cart'>
-              <Button className='btn'>
-                Add to Cart
-              </Button>
-            </NavLink>
+            {/* add products to cart */}
+            {stock && <AddToCart productData={singleProducts} />}
 
           </div>
         </div>
@@ -185,7 +165,7 @@ const Container = styled.section`
       letter-spacing: 0.1rem;
     }
 
-    .id, .brand{
+    .id, .brand, .color{
       font-weight: bold;
     }
 
@@ -215,24 +195,6 @@ const Container = styled.section`
     .available{
       p,span{
         font-weight: bold;
-      }
-    }
-
-    .noOfItemsToCart{
-      justify-content: flex-start;
-
-      .btns{
-        justify-content: space-evenly;
-        width: 7rem;
-      }
-
-      .btns > button{
-        cursor: pointer;
-        outline: none;
-        border: none;
-        background: transparent;
-        color: ${({theme}) => theme.colors.lightWhite};;
-        font-size: 1.5rem;
       }
     }
   }

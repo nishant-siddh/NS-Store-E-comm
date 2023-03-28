@@ -41,11 +41,6 @@ const FilterByCompanySection = styled.section`
         align-items: flex-start;
         gap: 0.6rem;
     }
-    
-    h3{
-        margin-bottom: 0.2rem;
-        font-weight: 600;
-    }
 
     #companyFilterValue{
         margin-left: 0.5rem;
