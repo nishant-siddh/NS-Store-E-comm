@@ -6,12 +6,6 @@ import styled from 'styled-components';
 
 const CartIcons = ({setMenuIcon}) => {
     const { allProductsCart, totalProducts } = useProductsCartContext();
-    // console.log(allProductsCart.map((item) => item.productQuantity));
-    // let cartTotalProducts = 0
-
-    // {allProductsCart.map(item => {
-    //     cartTotalProducts = item.productQuantity + cartTotalProducts;
-    // })}
 
     return (
         <>
