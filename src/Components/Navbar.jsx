@@ -63,8 +63,7 @@ const Wrapper = styled.nav`
                 transition: color 0.2s linear;
             }
             
-            &:hover,
-            &:active{
+            &:hover{
                 color: ${({ theme }) => theme.colors.baseColor};
             }
         }

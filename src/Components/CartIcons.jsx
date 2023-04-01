@@ -13,9 +13,7 @@ const CartIcons = ({setMenuIcon}) => {
                 <div className='cartContainer'>
                     <NavLink className='nav-link' onClick={() => setMenuIcon(false)} to='/cart'>
 
-                        {allProductsCart.length ===0 && <HiOutlineShoppingCart className="cart cartUnfilled" />}
-
-                        {allProductsCart.length !==0 && <HiShoppingCart className="cart cartfilled" />}
+                        {allProductsCart.length !==0 ? <HiShoppingCart className="cart" /> : <HiOutlineShoppingCart className="cart" />}
 
                         {allProductsCart.length !== 0 && 
                             <span className='totalCartItems flexProperty'>
@@ -32,6 +30,13 @@ const CartIcons = ({setMenuIcon}) => {
 const Wrapper = styled.section`
     .cartContainer{
         position: relative;
+    }
+
+    .nav-link{
+
+        &:hover{
+            color: red;
+        }
     }
 
     .totalCartItems{

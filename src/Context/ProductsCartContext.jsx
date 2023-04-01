@@ -3,8 +3,17 @@ import reducer from '../Reducer/ProductsCartReducer';
 
 const ProductsCartContext = createContext();
 
+const getLocalStorageCartItems = () => {
+    let localStorageCartData = localStorage.getItem('NS Store Cart Storage')
+
+    if(localStorageCartData) {
+        return JSON.parse(localStorageCartData)
+    }
+    return [];
+}
+
 const initialState = {
-    allProductsCart: [],
+    allProductsCart: getLocalStorageCartItems(),
     totalProducts: 0
 }
 
@@ -33,6 +42,7 @@ const ProductsCartContextProvider = ({children}) => {
 
     useEffect(() => {
         dispatch({type: 'Set_Cart_Total_Products'})
+        localStorage.setItem('NS Store Cart Storage' ,JSON.stringify(state.allProductsCart))
     }, [state.allProductsCart])
 
     return <ProductsCartContext.Provider value={{...state, addProductToCart, removeProduct, clearCart, setDecrement, setIncrement}}>
