@@ -1,16 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductContext } from '../Context/ProductContext';
 import { useProductsCartContext } from '../Context/ProductsCartContext'
 import { Button } from '../Styles/Button';
 import {FaCheck} from 'react-icons/fa';
+import CartProductQuantity from './CartProductQuantity';
 
 const AddToCart = ({productData}) => {
     const { addProductToCart } = useProductsCartContext();
-    const { id, colors } = productData;
     const [productQuantity, setProductQuantity] = useState(1);
+    const { id, colors, stock } = productData;
     const [selectedColor, setSelectedColor] = useState(colors[0]);
+    
+    const setDecrement = () => {
+        productQuantity > 1 ? setProductQuantity(prev => prev - 1) : setProductQuantity(1);
+    }
+
+    const setIncrement = () => {
+        productQuantity < stock ? setProductQuantity(prev => prev + 1) : setProductQuantity(stock);
+    }
+
+    useEffect(() => {
+        setSelectedColor(colors[0]);
+    }, [productData])
 
     return (
         <Wrapper>
@@ -38,12 +51,10 @@ const AddToCart = ({productData}) => {
 
             {/* cart button */}
             <div className='cart'>
-                <div className='noOfItemsToCart flexProperty'>
-                    <button type='button' className="btn decreaseNoOfItems" disabled={productQuantity > 1 ? false : true} onClick={(e) => setProductQuantity(prev => prev - 1)}>-</button>
-                    <p>{productQuantity}</p>
-                    <button type='button' className="btn increaseNoOfItems" onClick={() => setProductQuantity(prev => prev + 1)}>+</button>
-                </div>
+                {/* cart increment and decrement buttons */}
+                <CartProductQuantity productQuantity={productQuantity} setDecrement={setDecrement} setIncrement={setIncrement} />
 
+                {/* Add to cart button */}
                 <NavLink onClick={() => addProductToCart(id, productQuantity, selectedColor, productData)} to='/cart'>
                     <Button className='btn'>
                         Add to Cart
@@ -85,25 +96,6 @@ const Wrapper = styled.section`
     .checkStyle{
         font-size: 0.7rem;
         color: ${({theme}) => theme.colors.lightWhite};
-    }
-
-    .noOfItemsToCart{
-        justify-content: flex-start;
-        justify-content: space-evenly;
-        width: 7rem;
-
-        .btn{
-            cursor: pointer;
-            outline: none;
-            border: none;
-            background: transparent;
-            color: ${({theme}) => theme.colors.lightWhite};
-            font-size: 1.5rem;
-
-            &:hover{
-                color: ${({theme}) => theme.colors.baseColor};
-            }
-        }
     }
 `;
 

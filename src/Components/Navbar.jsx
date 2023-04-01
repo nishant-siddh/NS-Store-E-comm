@@ -3,6 +3,8 @@ import { CgMenu, CgClose } from "react-icons/cg";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../images/nsLogo2.jpg";
+import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi";
+import CartIcons from "./CartIcons";
 
 const Navbar = () => {
 
@@ -18,7 +20,9 @@ const Navbar = () => {
                         <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/about">About</NavLink></li>
                         <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/products">Product</NavLink></li>
                         <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/contact">Contact Us</NavLink></li>
-                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/cart"><i className="fa-solid fa-cart-shopping"></i></NavLink></li>
+                        <li>
+                            <CartIcons setMenuIcon={setMenuIcon} />
+                        </li>
                     </ul>
 
                     <div className="mobileMenuBtn">
@@ -35,9 +39,6 @@ const Navbar = () => {
 
 
 const Wrapper = styled.nav`
-    /* width: 100%;
-    position: fixed;
-    top: 0; */
     z-index: 999;
     
     .navigationBar {
@@ -67,6 +68,12 @@ const Wrapper = styled.nav`
                 color: ${({ theme }) => theme.colors.baseColor};
             }
         }
+
+        .cart{
+            margin-top: 0.5rem;
+            /* outline: 1px solid red; */
+            font-size: 1.3rem;
+        }
     }
 
     .mobileMenuBtn{
@@ -89,64 +96,62 @@ const Wrapper = styled.nav`
     }
 
     @media (max-width: ${({ theme }) => theme.media.mobile}) {
-    .logo{
-        max-width: 10rem;
-        min-width: 5rem;
-    }
-    .navigationBar{    
-        .navigationList{
-            flex-direction: column;
+        .logo{
+            max-width: 10rem;
+            min-width: 5rem;
+        }
+        .navigationBar{    
+            .navigationList{
+                display: none;
+            }
+        }
+
+        .mobileMenuBtn{
+            display: inline-block;
+            z-index: 9999;
+        }
+
+        .active .mobileMenuIcon{
             display: none;
         }
-    }
 
-    .mobileMenuBtn{
-        display: inline-block;
-        z-index: 9999;
-    }
+        .active .closeMenuOutline{
+            display: inline-block;
+        }
 
-    .active .mobileMenuIcon{
-        display: none;
-    }
+        .navigationBar{
+            .navigationList{
+                width: 70vw;
+                height: 100vh;
+                position: fixed;
+                padding-top: 70px;
+                top: 0;
+                right: 0;
+                background-color: ${({theme}) => theme.colors.baseColor};
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                flex-direction: column;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.2s linear;
 
-    .active .closeMenuOutline{
-        display: inline-block;
-    }
+            }
 
-    .navigationBar{
-        .navigationList{
-            width: 60vw;
-            height: 100vh;
-            position: fixed;
-            padding-top: 70px;
-            top: 0;
-            right: 0;
-            background-color: ${({theme}) => theme.colors.baseColor};
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            flex-direction: column;
-            visibility: hidden;
-            opacity: 0;
+            .nav-link:hover{
+                color: ${({theme}) => theme.colors.blackColor};
+            }
+        }
+
+        .active .navigationList{
+            visibility: visible;
+            opacity: 1;
             /* translate: 0; */
+            z-index: 999;
+            transform-origin: right;
             transition: all 0.2s linear;
-
-        }
-
-        .nav-link:hover{
-            color: ${({theme}) => theme.colors.blackColor};
         }
     }
-
-    .active .navigationList{
-        visibility: visible;
-        opacity: 1;
-        /* translate: 0; */
-        z-index: 999;
-        transform-origin: right;
-        transition: all 0.2s linear;
-    }
-}
 `;
 
 export default Navbar

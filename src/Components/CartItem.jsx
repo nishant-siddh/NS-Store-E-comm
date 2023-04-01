@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useProductsCartContext } from '../Context/ProductsCartContext';
+import CartProductQuantity from './CartProductQuantity';
 import FormatPrice from './FormatPrice';
+import RemoveProduct from './RemoveProduct';
 
-const CartItem = ({id, name, productQuantity, maxProductQuantity, selectedProductColor, image, price, description }) => {
-
-    const [cartItemQty, setCartItemQty] = useState(productQuantity);
+const CartItem = ({ id, name, productQuantity, maxProductQuantity, selectedProductColor, image, price, description }) => {
+    const {setDecrement, setIncrement} = useProductsCartContext();
 
     return (
         <Wrapper>
@@ -39,17 +41,16 @@ const CartItem = ({id, name, productQuantity, maxProductQuantity, selectedProduc
                         {/* stock */}
                         <div style={maxProductQuantity > 0 ? {color: 'green', fontWeight: 'bold'} : {color: 'red', fontWeight: 'bold'}}>{maxProductQuantity > 0 ? 'In Stock' : 'Out of Stock'}</div>
 
-                        <div className="noOfItemsToCart flexProperty">
-                        <button type='button' className="btn decreaseNoOfItems" disabled={cartItemQty > 1 ? false : true} onClick={(e) => setCartItemQty(prev => prev - 1)}>-</button>
-                        <p>{cartItemQty}</p>
-                        <button type='button' className="btn increaseNoOfItems" onClick={() => setCartItemQty(prev => prev + 1)}>+</button>
-                        </div>
+                        {/* cart increment and decrement buttons */}
+                        <CartProductQuantity productQuantity={productQuantity} setDecrement={() => setDecrement(id)} setIncrement={() => setIncrement(id)} />
 
                         <div className='viewAndRemove flexProperty'>
-                        <NavLink className='navLink' to={`/singleProduct/${id}`}>
-                            <div className="viewProduct">View Product</div>
-                        </NavLink>
-                        <div className="removeProduct">Remove</div>
+                            <NavLink className='navLink' to={`/singleProduct/${id}`}>
+                                <div className="viewProduct">View Product</div>
+                            </NavLink>
+
+                            {/* remove products from cart */}
+                            <RemoveProduct id={id} />
                         </div>
                         
                     </div>
@@ -119,24 +120,6 @@ const Wrapper = styled.section`
 
     h3{
       font-weight: normal;
-    }
-
-    .noOfItemsToCart{
-      justify-content: space-around;
-      width: 5rem;
-      
-      .btn{
-        cursor: pointer;
-        outline: none;
-        border: none;
-        background: transparent;
-        color: ${({theme}) => theme.colors.lightWhite};
-        font-size: 1.5rem;
-
-        &:hover{
-          color: ${({theme}) => theme.colors.baseColor};
-        }
-      }
     }
 
     .viewAndRemove{

@@ -5,32 +5,128 @@ const ProductCartReducer = (state, action) => {
         case "Set_Products_To_Cart":
             const {id, productQuantity, selectedProductColor, productData} = action.payload;
 
-            // console.log(productData);
-            const cartProduct = {
-                id: id + selectedProductColor,
-                name: productData.name,
-                productQuantity,
-                selectedProductColor,
-                image: productData.image[0].url,
-                price: productData.price,
-                maxProductQuantity: productData.stock,
-                description: productData.description
+            const existingProduct = state.allProductsCart.find((item) => item.id === id + selectedProductColor)
+            // console.log(existingProduct, 'ep');
+            
+            if(existingProduct){
+                let updatedProducts = state.allProductsCart.map(item => {
+                    if(item.id === id + selectedProductColor){
+                        let newProductQuantity = item.productQuantity + productQuantity;
+                        if(newProductQuantity >= item.maxProductQuantity){
+                            newProductQuantity = item.maxProductQuantity;
+                        }
+
+                        return {
+                            ...item,
+                            productQuantity: newProductQuantity
+                        }
+                    }
+
+                    else{
+                        return item
+                    }
+                })
+
+                return {
+                    ...state,
+                    allProductsCart: updatedProducts
+                }
             }
 
-            const product = cartProduct;
-            console.log(product,'hi');
-
-            state.allProductsCart.map(item => {
-                if(cartProduct.id === item.id){
-                    return 1;
+            else{
+                const cartProduct = {
+                    id: id + selectedProductColor,
+                    name: productData.name,
+                    productQuantity,
+                    selectedProductColor,
+                    image: productData.image[0].url,
+                    price: productData.price,
+                    maxProductQuantity: productData.stock,
+                    description: productData.description
                 }
-            })
 
+                return {
+                    ...state,
+                    allProductsCart: [...state.allProductsCart, cartProduct],
+                }
+            }
+
+        case 'Set_Decrement':
+            const updatedDecrementQuantity = state.allProductsCart.map((product) => {
+                if(product.id === action.payload){
+                    let decreasedQuantity = product.productQuantity - 1;
+
+                    if(decreasedQuantity <= 1){
+                        decreasedQuantity = 1;
+                    }
+
+                    return {
+                        ...product,
+                        productQuantity: decreasedQuantity
+                    }
+                }
+                else{
+                    return product
+                }
+            });
 
             return {
                 ...state,
-                allProductsCart: [...state.allProductsCart, cartProduct],
-                productQuantity: productQuantity
+                allProductsCart: updatedDecrementQuantity
+            }
+
+        case 'Set_Increment':
+            const updatedIncrementQuantity = state.allProductsCart.map((product) => {
+                if(product.id === action.payload){
+                    let increasedQuantity = product.productQuantity + 1;
+
+                    if(increasedQuantity > product.maxProductQuantity){
+                        increasedQuantity = product.maxProductQuantity;
+                    }
+
+                    return {
+                        ...product,
+                        productQuantity: increasedQuantity
+                    }
+                }
+                else{
+                    return product
+                }
+            });
+
+            return {
+                ...state,
+                allProductsCart: updatedIncrementQuantity
+            }
+
+        case 'Set_Cart_Total_Products':
+            let updatedItemCount = state.allProductsCart.reduce((acc, curr) => {
+                let { productQuantity } = curr;
+                acc = acc + productQuantity
+                return acc;
+            }, 0)
+
+            return {
+                ...state,
+                totalProducts: updatedItemCount
+            }
+        
+        case 'Remove_Product_From_Cart':
+
+            let updatedCart = [...state.allProductsCart]
+
+            updatedCart = updatedCart.filter(item => item.id !== action.payload)
+            console.log(updatedCart);
+
+            return {
+                ...state,
+                allProductsCart: updatedCart
+            }
+
+        case 'Clear_Cart':
+            return {
+                ...state,
+                allProductsCart: []
             }
     
         default:

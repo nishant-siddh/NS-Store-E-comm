@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useProductsCartContext } from '../Context/ProductsCartContext'
 import CartItem from './CartItem';
+import ClearCart from './ClearCart';
 import Subtotal from './Subtotal';
 
 const Cart = () => {
@@ -14,20 +15,24 @@ const Cart = () => {
         Products <span className="heading_text">Basket</span>
       </h2>
 
-      <div className='cart flexProperty'>
+      {allProductsCart.length !== 0
+        ? <div className='cart flexProperty'>
 
-        {/* product details */}
-        <div className='cartProductsContainer'>
-          {
-            allProductsCart.map((product) => {
-              return <CartItem key={product.id} {...product} />
-            })
-          }
-        </div>
+            {/* product details */}
+            <div className='cartProductsContainer'>
+              {
+                allProductsCart.map((product) => {
+                  // console.log(product.id, 'product');
+                  return <CartItem key={product.id} {...product} />
+                })
+              } 
+            {/* <ClearCart /> */}
+            </div>
 
-        {/* product's subtotal price */}
-        <Subtotal />
-      </div>
+            {/* product's subtotal price */}
+            <Subtotal />
+          </div>
+        : 'Your cart is empty!'}
     </Wrapper>
   )
 }

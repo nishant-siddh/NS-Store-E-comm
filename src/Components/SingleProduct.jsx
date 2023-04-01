@@ -8,7 +8,6 @@ import PageNavigation from './PageNavigation';
 import { TbReplace, TbTruckDelivery } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
 import Stars from './Stars';
-import { useProductsCartContext } from '../Context/ProductsCartContext';
 import AddToCart from './AddToCart';
 
 const API = "https://api.pujakaitem.com/api/products";
