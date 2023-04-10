@@ -19,7 +19,7 @@ const Cart = () => {
         ? <div className='cart flexProperty'>
 
             {/* product details */}
-            <div className='cartProductsContainer'>
+            <div className='cartProductsContainer flexProperty'>
               {
                 allProductsCart.map((product) => {
                   // console.log(product.id, 'product');
@@ -46,12 +46,13 @@ const Wrapper = styled.section`
   .cart{
     max-width: 80rem;
     margin: 0 auto;
-    /* outline: 1px solid red; */
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
 
     .cartProductsContainer{
       max-width: 60rem;
-      /* outline: 1px solid green; */
+      gap: 1rem;
     }
   }
 `;

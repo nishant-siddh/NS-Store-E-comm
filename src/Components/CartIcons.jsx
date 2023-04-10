@@ -33,12 +33,18 @@ const Wrapper = styled.section`
     }
 
     .nav-link{
-
+        transition: color 0.2s linear;
+        
         &:hover{
-            color: red;
+            color: ${({theme}) => theme.colors.baseColor};
         }
     }
 
+    .cart{
+        margin-top: 0.5rem;
+        font-size: 1.3rem;
+    }
+    
     .totalCartItems{
         position: absolute;
         align-content: center;
@@ -52,11 +58,21 @@ const Wrapper = styled.section`
         background-color: ${({theme}) => theme.colors.baseColor};
         font-size: 0.7rem;
         font-weight: bold;
+        color: white !important
+        
     }
-
+    
     @media (max-width: ${({ theme }) => theme.media.mobile}){
         .totalCartItems{
             background-color: ${({theme}) => theme.colors.blackColor}
+        }
+
+        .nav-link{
+            transition: color 0.2s linear;
+            
+            &:hover{
+                color: ${({theme}) => theme.colors.blackColor};
+            }
         }
     }
 `;

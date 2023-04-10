@@ -6,11 +6,6 @@ import { Button } from "../Styles/Button";
 
 const Footer = () => {
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        // alert();
-    }
-
     return (
         <Wrapper>
             <footer>
@@ -67,15 +62,12 @@ const Footer = () => {
 }
 
 const Wrapper = styled.section`
-    background-color: ${({ theme }) => theme.colors.baseColor};
-    margin-top: 8rem;
+    footer{
+        width: 100%;
+        background-color: ${({ theme }) => theme.colors.baseColor};
+        margin-top: 8rem;
+    }
 
-    /* footer{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    } */
 
     .container{
         padding: 3rem 1.5rem;
@@ -115,11 +107,8 @@ const Wrapper = styled.section`
 
     .bottomFooterContainer{
         padding: 1rem;
-        /* border: 1px solid red; */
-        /* justify-content: space-between; */
 
         .bottomFooter{
-            /* border: 1px solid green; */
             max-width: 40rem;
             margin: 0 auto;
             justify-content: space-between;

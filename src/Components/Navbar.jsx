@@ -53,25 +53,19 @@ const Wrapper = styled.nav`
             list-style: none;
             line-height: 35px;
             gap: 20px;
-        }
-
-        .nav-link {
-            &:link,
-            &:visited{
-                display: inline-block;
-                text-decoration: none;
-                transition: color 0.2s linear;
-            }
             
-            &:hover{
-                color: ${({ theme }) => theme.colors.baseColor};
+            li > .nav-link {
+                &:link,
+                &:visited{
+                    display: inline-block;
+                    text-decoration: none;
+                    transition: color 0.2s linear;
+                }
+                
+                &:hover{
+                    color: ${({ theme }) => theme.colors.baseColor};
+                }
             }
-        }
-
-        .cart{
-            margin-top: 0.5rem;
-            /* outline: 1px solid red; */
-            font-size: 1.3rem;
         }
     }
 
@@ -99,9 +93,10 @@ const Wrapper = styled.nav`
             max-width: 10rem;
             min-width: 5rem;
         }
+
         .navigationBar{    
             .navigationList{
-                display: none;
+                /* display: none; */
             }
         }
 
@@ -128,18 +123,22 @@ const Wrapper = styled.nav`
                 right: 0;
                 background-color: ${({theme}) => theme.colors.baseColor};
                 display: flex;
-                justify-content: start;
+                justify-content: flex-start;
                 align-items: center;
                 flex-direction: column;
                 visibility: hidden;
                 opacity: 0;
                 transition: all 0.2s linear;
 
+                li > .nav-link{
+                    transition: color 0.2s linear;
+                
+                    &:hover{
+                        color: ${({theme}) => theme.colors.blackColor};
+                    }
+                }
             }
 
-            .nav-link:hover{
-                color: ${({theme}) => theme.colors.blackColor};
-            }
         }
 
         .active .navigationList{

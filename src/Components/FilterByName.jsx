@@ -5,8 +5,6 @@ import { useFilterContext } from '../Context/FilterContext'
 const FilterByName = () => {
   const { updateFiltersValue, filters: {nameFilterValue} } = useFilterContext();
 
-  const {inputRef} = useRef();
-
   return (
     <FilterByNameSection>
         <div className='nameFilter'>

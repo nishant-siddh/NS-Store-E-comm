@@ -14,7 +14,8 @@ const getLocalStorageCartItems = () => {
 
 const initialState = {
     allProductsCart: getLocalStorageCartItems(),
-    totalProducts: 0
+    totalProducts: 0,
+    productsTotalPrice: 0
 }
 
 const ProductsCartContextProvider = ({children}) => {
@@ -32,16 +33,21 @@ const ProductsCartContextProvider = ({children}) => {
         dispatch({type: 'Set_Increment', payload: id})
     }
 
-    const removeProduct = (id) => {{
+    const removeProduct = (id) => {
         dispatch({type: 'Remove_Product_From_Cart', payload: id})
-    }}
+    }
 
     const clearCart = () => {
         dispatch({type: 'Clear_Cart'})
     }
 
     useEffect(() => {
-        dispatch({type: 'Set_Cart_Total_Products'})
+        dispatch({type: 'Set_Cart_Product_Price'});
+        dispatch({type: 'Set_Cart_AllProduct_Subtotal'});
+    }, [state.totalProducts])
+
+    useEffect(() => {
+        dispatch({type: 'Set_Cart_Total_Products'});
         localStorage.setItem('NS Store Cart Storage' ,JSON.stringify(state.allProductsCart))
     }, [state.allProductsCart])
 

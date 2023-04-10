@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-
 const ProductCartReducer = (state, action) => {
     switch (action.type) {
         case "Set_Products_To_Cart":
@@ -42,7 +40,8 @@ const ProductCartReducer = (state, action) => {
                     image: productData.image[0].url,
                     price: productData.price,
                     maxProductQuantity: productData.stock,
-                    description: productData.description
+                    description: productData.description,
+                    singleProductSubtotal: 0,
                 }
 
                 return {
@@ -55,38 +54,38 @@ const ProductCartReducer = (state, action) => {
             const updatedDecrementQuantity = state.allProductsCart.map((product) => {
                 if(product.id === action.payload){
                     let decreasedQuantity = product.productQuantity - 1;
-
+                    
                     if(decreasedQuantity <= 1){
                         decreasedQuantity = 1;
                     }
 
                     return {
                         ...product,
-                        productQuantity: decreasedQuantity
+                        productQuantity: decreasedQuantity,
                     }
                 }
                 else{
                     return product
                 }
             });
-
+            
             return {
                 ...state,
                 allProductsCart: updatedDecrementQuantity
             }
-
+            
         case 'Set_Increment':
             const updatedIncrementQuantity = state.allProductsCart.map((product) => {
                 if(product.id === action.payload){
                     let increasedQuantity = product.productQuantity + 1;
-
+                    
                     if(increasedQuantity > product.maxProductQuantity){
                         increasedQuantity = product.maxProductQuantity;
                     }
-
+                    
                     return {
                         ...product,
-                        productQuantity: increasedQuantity
+                        productQuantity: increasedQuantity,
                     }
                 }
                 else{
@@ -103,6 +102,7 @@ const ProductCartReducer = (state, action) => {
             let updatedItemCount = state.allProductsCart.reduce((acc, curr) => {
                 let { productQuantity } = curr;
                 acc = acc + productQuantity
+
                 return acc;
             }, 0)
 
@@ -110,13 +110,40 @@ const ProductCartReducer = (state, action) => {
                 ...state,
                 totalProducts: updatedItemCount
             }
-        
+
+        case 'Set_Cart_Product_Price': 
+            const updatedPrice = state.allProductsCart.map(item => {
+                let newPrice = item.price * item.productQuantity;
+
+                return {
+                    ...item,
+                    singleProductSubtotal: newPrice
+                }
+            });
+
+            return {
+                ...state,
+                allProductsCart: updatedPrice
+            }
+
+        case 'Set_Cart_AllProduct_Subtotal':
+            let updatedSubtotal = state.allProductsCart.reduce((acc, curr) => {
+                let { singleProductSubtotal } = curr;
+                acc = acc + singleProductSubtotal
+
+                return acc;
+            }, 0)
+
+            return {
+                ...state,
+                productsTotalPrice: updatedSubtotal
+            }
+
         case 'Remove_Product_From_Cart':
 
             let updatedCart = [...state.allProductsCart]
 
             updatedCart = updatedCart.filter(item => item.id !== action.payload)
-            console.log(updatedCart);
 
             return {
                 ...state,
