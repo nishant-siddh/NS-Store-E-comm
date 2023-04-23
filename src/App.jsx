@@ -10,13 +10,13 @@ import SingleProduct from './Components/SingleProduct';
 import { GlobalStyle } from './Components/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import Footer from './Components/Footer';
-
+ 
 const App = () => {
 
   const theme = {
     colors: {
       baseColor: "#b89f48",
-      onHoverBtnBgColor: '#e4c657',
+      onHoverBtnBgColor: '#c5a52e',
       blackColor: '#070707',
       greyBackground: '#1b1b1b',
       lightGreyBackground: '#191818',

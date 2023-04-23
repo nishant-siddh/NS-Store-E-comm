@@ -41,7 +41,6 @@ const Wrapper = styled.section`
     }
 
     .cart{
-        margin-top: 0.5rem;
         font-size: 1.3rem;
     }
     
@@ -52,7 +51,7 @@ const Wrapper = styled.section`
         vertical-align: center;
         width: 18px;
         height: 18px;
-        top: 0px;
+        top: -10px;
         right: -5px;
         border-radius: 100%;
         background-color: ${({theme}) => theme.colors.baseColor};

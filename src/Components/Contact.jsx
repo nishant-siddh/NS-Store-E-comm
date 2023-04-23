@@ -1,13 +1,10 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components'
 import { Button } from '../Styles/Button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Contact = () => {
-
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  // }
+  const { isAuthenticated, user } = useAuth0();
 
   return (
     <Wrapper>
@@ -17,16 +14,14 @@ const Contact = () => {
 
       <div className="formContainer">
         <form className='flexProperty' action="https://formspree.io/f/mrgvgwog" method='POST'>
-          <input type="text" placeholder='Username' name='Username' autoComplete='off' required />
+          <input type="text" placeholder='Username' value={isAuthenticated ? user.name : ''} name='Username' autoComplete='off' required />
 
-          <input type="email" name='Email' placeholder='Enter your email' autoComplete='off' required />
+          <input type="email" name='Email' placeholder='Enter your email' value={isAuthenticated ? user.email : ''}  autoComplete='off' required />
 
           <textarea name="Message" cols="20" rows="10" placeholder='Enter your message' autoComplete='off' required></textarea>
 
           <Button type='submit' className='btn'>
-            {/* <NavLink> */}
-                Send
-            {/* </NavLink> */}
+            Send
           </Button>
         </form>
       </div>
@@ -41,7 +36,6 @@ const Wrapper = styled.section`
   }
 
   h2{
-    /* font-weight: bold; */
     padding: 1rem 0;
   }
 

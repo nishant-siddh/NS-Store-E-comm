@@ -1,10 +1,10 @@
 const ProductCartReducer = (state, action) => {
     switch (action.type) {
+
         case "Set_Products_To_Cart":
             const {id, productQuantity, selectedProductColor, productData} = action.payload;
 
             const existingProduct = state.allProductsCart.find((item) => item.id === id + selectedProductColor)
-            // console.log(existingProduct, 'ep');
             
             if(existingProduct){
                 let updatedProducts = state.allProductsCart.map(item => {
@@ -50,6 +50,8 @@ const ProductCartReducer = (state, action) => {
                 }
             }
 
+
+
         case 'Set_Decrement':
             const updatedDecrementQuantity = state.allProductsCart.map((product) => {
                 if(product.id === action.payload){
@@ -74,6 +76,8 @@ const ProductCartReducer = (state, action) => {
                 allProductsCart: updatedDecrementQuantity
             }
             
+
+
         case 'Set_Increment':
             const updatedIncrementQuantity = state.allProductsCart.map((product) => {
                 if(product.id === action.payload){
@@ -98,22 +102,12 @@ const ProductCartReducer = (state, action) => {
                 allProductsCart: updatedIncrementQuantity
             }
 
-        case 'Set_Cart_Total_Products':
-            let updatedItemCount = state.allProductsCart.reduce((acc, curr) => {
-                let { productQuantity } = curr;
-                acc = acc + productQuantity
+    
 
-                return acc;
-            }, 0)
-
-            return {
-                ...state,
-                totalProducts: updatedItemCount
-            }
-
-        case 'Set_Cart_Product_Price': 
+        case 'Set_Cart_Product_Price':
             const updatedPrice = state.allProductsCart.map(item => {
-                let newPrice = item.price * item.productQuantity;
+                const { price, productQuantity } = item;
+                let newPrice = price * productQuantity;
 
                 return {
                     ...item,
@@ -126,19 +120,29 @@ const ProductCartReducer = (state, action) => {
                 allProductsCart: updatedPrice
             }
 
-        case 'Set_Cart_AllProduct_Subtotal':
-            let updatedSubtotal = state.allProductsCart.reduce((acc, curr) => {
-                let { singleProductSubtotal } = curr;
-                acc = acc + singleProductSubtotal
+
+
+        case 'Set_Cart_Total_Product_And_Product_Price':
+            let { updatedAllProductsSubtotal, updatedItemCount } = state.allProductsCart.reduce((acc, curr) => {
+                let { singleProductSubtotal, productQuantity } = curr;
+
+                acc.updatedItemCount += productQuantity;
+                acc.updatedAllProductsSubtotal += singleProductSubtotal;
 
                 return acc;
-            }, 0)
+            }, {
+                updatedAllProductsSubtotal: 0,
+                updatedItemCount: 0
+            })
 
             return {
                 ...state,
-                productsTotalPrice: updatedSubtotal
+                productsTotalPrice: updatedAllProductsSubtotal,
+                totalProducts: updatedItemCount
             }
 
+
+            
         case 'Remove_Product_From_Cart':
 
             let updatedCart = [...state.allProductsCart]
@@ -150,11 +154,15 @@ const ProductCartReducer = (state, action) => {
                 allProductsCart: updatedCart
             }
 
+
+
         case 'Clear_Cart':
             return {
                 ...state,
                 allProductsCart: []
             }
+
+            
     
         default:
             return state;

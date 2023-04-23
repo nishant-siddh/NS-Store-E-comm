@@ -3,12 +3,17 @@ import { CgMenu, CgClose } from "react-icons/cg";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../images/nsLogo2.jpg";
-import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi";
 import CartIcons from "./CartIcons";
+import { MdConveyorBelt, MdLogin } from "react-icons/md";
+import { HiHome } from "react-icons/hi";
+import { RiContactsFill } from "react-icons/ri";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "../Styles/Button";
 
 const Navbar = () => {
 
     const [menuIcon, setMenuIcon] = useState(false);
+    const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
     return (
         <>
@@ -16,14 +21,34 @@ const Navbar = () => {
                 <div className={menuIcon ? 'navigationBar active' : 'navigationBar'}>
                     <NavLink to='/'><img src={logo} alt="Logo" className="logo" /></NavLink>
                     <ul className="navigationList flexProperty">
-                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} aria-current="page" to="/">Home</NavLink></li>
-                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/about">About</NavLink></li>
-                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/products">Product</NavLink></li>
-                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/contact">Contact Us</NavLink></li>
+                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} aria-current="page" to="/"><span>Home</span> <HiHome /></NavLink></li>
+                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/about"><span>About</span></NavLink></li>
+                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/products"><span>Product</span> <MdConveyorBelt /></NavLink></li>
+                        <li><NavLink className="nav-link" onClick={() => setMenuIcon(false)} to="/contact"><span>Contact Us</span> <RiContactsFill /></NavLink></li>
+
+                        {isAuthenticated && <p className="userName">{user.name}</p>}
+
+                        {!isAuthenticated ? 
+                            (
+                                <li>
+                                    <Button className="loginBtn" onClick={() => loginWithRedirect()}>
+                                        Log In
+                                    </Button>
+                                </li>
+                            ) : (
+                                <li>
+                                    <Button className="logoutBtn"  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                                        Log Out
+                                    </Button>
+                                </li>
+                            )
+                        }
+
                         <li>
                             <CartIcons setMenuIcon={setMenuIcon} />
                         </li>
                     </ul>
+
 
                     <div className="mobileMenuBtn">
                         <CgMenu className="mobileMenuIcon openMenuIcon" onClick={() => setMenuIcon(true)} />
@@ -31,6 +56,7 @@ const Navbar = () => {
                     </div>
 
                 </div>
+                <hr />
             </Wrapper>
         </>
     );
@@ -39,31 +65,40 @@ const Navbar = () => {
 
 
 const Wrapper = styled.nav`
-    z-index: 999;
     
     .navigationBar {
+        max-width: 75rem;
+        margin: 0 auto;
         display: flex;
         justify-content: space-between;
-        /* align-items: center; */
         padding: 0 15px;
         background-color: ${({theme}) => theme.colors.blackColor};
-        border-bottom: 1px solid ${({ theme }) => theme.colors.baseColor};
+        z-index: 999;
 
         .navigationList {
             list-style: none;
-            line-height: 35px;
+            align-items: center;
             gap: 20px;
-            
-            li > .nav-link {
-                &:link,
-                &:visited{
-                    display: inline-block;
-                    text-decoration: none;
-                    transition: color 0.2s linear;
+
+            .userName{
+                font-size: 0.9rem;
+            }
+
+            li{
+                .loginBtn, .logoutBtn{
+                    margin-top: 0;
                 }
-                
-                &:hover{
-                    color: ${({ theme }) => theme.colors.baseColor};
+                .nav-link {
+                    &:link,
+                    &:visited{
+                        display: inline-block;
+                        text-decoration: none;
+                        transition: color 0.2s linear;
+                    }
+                    
+                    &:hover{
+                        color: ${({ theme }) => theme.colors.baseColor};
+                    }
                 }
             }
         }
@@ -84,7 +119,6 @@ const Wrapper = styled.nav`
     }
 
     .closeMenuOutline{
-        /* position: fixed; */
         display: none;
     }
 
@@ -96,7 +130,6 @@ const Wrapper = styled.nav`
 
         .navigationBar{    
             .navigationList{
-                /* display: none; */
             }
         }
 
@@ -144,7 +177,6 @@ const Wrapper = styled.nav`
         .active .navigationList{
             visibility: visible;
             opacity: 1;
-            /* translate: 0; */
             z-index: 999;
             transform-origin: right;
             transition: all 0.2s linear;

@@ -1,8 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
 import { useProductsCartContext } from '../Context/ProductsCartContext'
 import CartItem from './CartItem';
-import ClearCart from './ClearCart';
 import Subtotal from './Subtotal';
 
 const Cart = () => {

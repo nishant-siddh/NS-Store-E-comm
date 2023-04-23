@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import FormatPrice from './FormatPrice';
@@ -8,7 +7,7 @@ const Product = (element) => {
     const { id, name, price, image } = element;
 
     return (
-        <ProductItem>
+        <Wrapper>
             <div className='productItem'>
                 <NavLink className='nav-link' to={`/singleProduct/${id}`}>
                     <div className='container flexProperty'>
@@ -35,18 +34,16 @@ const Product = (element) => {
                     </div>
                 </NavLink>
             </div>
-        </ProductItem>
+        </Wrapper>
     )
 }
 
-const ProductItem = styled.section`
+const Wrapper = styled.section`
     .productItem{
-        /* outline: 2px solid red; */
       background-color: ${({theme}) => theme.colors.greyBackground};
       padding: 0.5rem;
 
         .container{
-            /* outline: 2px solid green; */
             position: relative;
             overflow: hidden;
             max-width: 22rem;

@@ -41,15 +41,16 @@ const ProductsCartContextProvider = ({children}) => {
         dispatch({type: 'Clear_Cart'})
     }
 
-    useEffect(() => {
-        dispatch({type: 'Set_Cart_Product_Price'});
-        dispatch({type: 'Set_Cart_AllProduct_Subtotal'});
-    }, [state.totalProducts])
 
     useEffect(() => {
-        dispatch({type: 'Set_Cart_Total_Products'});
+        dispatch({type: 'Set_Cart_Product_Price'});
+    }, [state.totalProducts])
+    
+    useEffect(() => {
+        dispatch({type: 'Set_Cart_Total_Product_And_Product_Price'});
         localStorage.setItem('NS Store Cart Storage' ,JSON.stringify(state.allProductsCart))
     }, [state.allProductsCart])
+    
 
     return <ProductsCartContext.Provider value={{...state, addProductToCart, removeProduct, clearCart, setDecrement, setIncrement}}>
         {children}
