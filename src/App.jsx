@@ -1,15 +1,15 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
-import About from './Components/About';
-import Products from './Components/Products';
-import Contact from './Components/Contact';
-import Cart from './Components/Cart';
-import SingleProduct from './Components/SingleProduct';
-import { GlobalStyle } from './Components/GlobalStyle';
+import Navbar from './Components/HomePage/Navbar';
+import Home from './Components/HomePage/Home';
+import About from './Components/AboutPage/About';
+import Products from './Components/Products Page/Products';
+import Contact from './Components/ContactPage/Contact';
+import Cart from './Components/Cart Section/Cart';
+import SingleProduct from './Components/SingleProductDetailsPage/SingleProduct';
+import { GlobalStyle } from './Components/GlobalStyle/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
-import Footer from './Components/Footer';
+import Footer from './Components/FooterSection/Footer';
  
 const App = () => {
 
